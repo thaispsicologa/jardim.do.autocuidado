@@ -1,12 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Jardim do Autocuidado — jogo de autocuidado gentil</title>
-    <meta name="description" content="Página gamificada, suave e acolhedora, para apoiar em microtarefas de autocuidado com reforço positivo, respiração, grounding, ativação comportamental e mensagens compassivas." />
-    <meta name="theme-color" content="#F0F7F4" />
+    <title>Jardim do Autocuidado</title>
+    <meta name="description" content="Um espaço para práticas de autocuidado e bem-estar orientado por Thaís Campos, Psicóloga Clínica." />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://thaispsicologa.github.io/jardim.do.autocuidado/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jardim do Autocuidado" />
+    <meta property="og:description" content="Um espaço para práticas de autocuidado e bem-estar orientado por Thaís Campos, Psicóloga Clínica." />
+    <meta property="og:url" content="https://thaispsicologa.github.io/jardim.do.autocuidado/" />
+    <meta property="og:image" content="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" />
+    <link rel="icon" href="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" type="image/jpeg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jardim do Autocuidado" />
+    <meta name="twitter:description" content="Espaço para práticas de autocuidado e bem-estar." />
+    <meta name="twitter:image" content="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" />
+
     <style>
         :root {
             --bg: #F7FAF9;
@@ -1260,7 +1277,7 @@
 
         // Mensagem inicial suave (uma vez)
         if (!localStorage.getItem('jardim-autocuidado-welcome')) {
-            alert('Bem-vinda ao Jardim do Autocuidado! Cada missão concluída planta uma flor no jardim. Vamos começar com uma microação? 🌼');
+            alert('Bem-vindo(a) ao Jardim do Autocuidado! Cada missão concluída planta uma flor no jardim. Vamos começar com uma microação? 🌼');
             localStorage.setItem('jardim-autocuidado-welcome', '1');
         }
 
