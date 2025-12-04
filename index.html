@@ -1,1061 +1,1290 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 
 <head>
-    <!-- Metadados essenciais e SEO -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Avalie sua dependência e codependência emocional por meio desta escala prática e confiável. Descubra seus padrões emocionais e receba orientações para um equilíbrio psicológico." />
-    <meta name="keywords" content="dependência emocional, codependência emocional, avaliação psicológica, LGPD, psicometria, saúde mental" />
-    <meta property="og:title" content="Escala de Codependência e Dependência Emocional" />
-    <meta property="og:description" content="Avalie seus padrões emocionais e receba orientações para melhorar seus relacionamentos." />
-    <meta property="og:image" content="https://i.pinimg.com/736x/65/a3/07/65a307061047eff7193890fee5568e95.jpg" />
-    <meta property="og:url" content="https://ricmurtapsicologia.github.io/Escala-de-Co-Depenpencia-Emocional/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jardim do Autocuidado</title>
+    <meta name="description" content="Um espaço para práticas de autocuidado e bem-estar orientado por Thaís Campos, Psicóloga Clínica." />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://thaispsicologa.github.io/jardim.do.autocuidado/" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:type" content="website" />
-    <title>Escala de Codependência e Dependência Emocional</title>
-    <!-- Biblioteca JustGage para os velocímetros -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.4.0/justgage.min.js"></script>
-    <!-- Favicon: usando a imagem de pré-visualização do WhatsApp -->
-    <link rel="icon" href="https://i.pinimg.com/736x/65/a3/07/65a307061047eff7193890fee5568e95.jpg">
-    <!-- Estilos CSS modernos e responsivos -->
+    <meta property="og:title" content="Jardim do Autocuidado" />
+    <meta property="og:description" content="Um espaço para práticas de autocuidado e bem-estar orientado por Thaís Campos, Psicóloga Clínica." />
+    <meta property="og:url" content="https://thaispsicologa.github.io/jardim.do.autocuidado/" />
+    <meta property="og:image" content="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" />
+    <link rel="icon" href="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" type="image/jpeg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jardim do Autocuidado" />
+    <meta name="twitter:description" content="Espaço para práticas de autocuidado e bem-estar." />
+    <meta name="twitter:image" content="https://i.pinimg.com/736x/ab/7e/a2/ab7ea2740b21f408af7ba56ffff333bf.jpg" />
+
     <style>
-        /* Reset e estilos básicos */
-        *,
-        *::before,
-        *::after {
+        :root {
+            --bg: #F7FAF9;
+            /* fundo calmo */
+            --card: #FFFFFF;
+            /* cartões */
+            --ink: #1B2A2F;
+            /* texto principal */
+            --muted: #5C6B70;
+            /* texto secundário */
+            --accent: #6BC3B1;
+            /* destaque suave (verde água) */
+            --accent-2: #8EC5FF;
+            /* destaque secundário (azul suave) */
+            --warn: #FFB4B4;
+            /* alerta suave */
+            --ok: #A1E3A1;
+            /* sucesso suave */
+            --shadow: 0 4px 18px rgba(0, 0, 0, .08);
+            --radius: 16px;
+
+            /* Botões simétricos */
+            --btn-h: 44px;
+            --btn-min: 140px;
+
+            /* Cores do balão de respiração (calmas e contrastantes) */
+            --breath-center: #FFFFFF;
+            --breath-ring: #CFEAFC;
+            /* azul bem calmo */
+            --breath-outline: #8ABFEF;
+            /* contraste suave */
+        }
+
+        /* Tema Noturno (ativado via classe .dark no body) */
+        body.dark {
+            --bg: #0F1517;
+            --card: #121C20;
+            --ink: #E6F1F0;
+            --muted: #9CB3B2;
+            --accent: #5DB9A6;
+            --accent-2: #78B4FF;
+            --warn: #FF9E9E;
+            --ok: #7BD47B;
+
+            --breath-center: #162229;
+            --breath-ring: #265C80;
+            --breath-outline: #7FBDF0;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden;
+        /* Textos justificados de forma global (mantém centralizações pontuais por inline style) */
+        p,
+        li {
             text-align: justify;
-            opacity: 0;
-            animation: fadeIn 0.6s forwards ease-in-out;
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 12px 0 6px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .brand h1 {
+            font-size: clamp(20px, 2.4vw, 28px);
+            margin: 0
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        /* Toolbar simétrica */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #EAF6F3;
+            padding: 0 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            height: var(--btn-h);
+            min-width: var(--btn-min)
+        }
+
+        body.dark .pill {
+            background: #1B2A2F
+        }
+
+        /* Botões com dimensões e alinhamento iguais */
+        button,
+        .btn,
+        .btn-ghost,
+        .btn-secondary,
+        .btn-warn,
+        .btn-ok {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--btn-h);
+            min-width: var(--btn-min);
+            padding: 0 16px;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: .25px;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: #073B3A
+        }
+
+        .btn-secondary {
+            background: var(--accent-2);
+            color: #0A2C57
+        }
+
+        .btn-ghost {
+            background: #E9F4F1;
+            color: #074743
+        }
+
+        body.dark .btn-ghost {
+            background: #1B2A2F;
+            color: #CFE7E4
+        }
+
+        .btn-warn {
+            background: var(--warn);
+            color: #5A0101
+        }
+
+        .btn-ok {
+            background: var(--ok);
+            color: #053305
+        }
+
+        .icon {
+            width: 26px;
+            height: 26px;
+            display: inline-block;
+            vertical-align: middle
+        }
+
+        /* Cartões com alturas consistentes; botões no rodapé do cartão */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .card h3 {
+            margin: 6px 0 8px 0;
+            font-size: 18px
+        }
+
+        .card p {
+            margin: 4px 0;
+            color: var(--muted)
+        }
+
+        .grid .card .btn {
+            width: 100%;
+            margin-top: auto
+        }
+
+        .plant-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        @media (max-width:920px) {
+            .plant-area {
+                grid-template-columns: 1fr
+            }
+
+            header {
+                justify-content: center
+            }
+
+            .brand {
+                justify-content: center
             }
         }
 
-        /* Splash Screen */
-        #splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .meter {
+            height: 10px;
+            background: #E6F1EF;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .meter>div {
             height: 100%;
-            background: #0b3d91;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            width: 0%;
+            transition: width .6s ease
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 18px 0 8px 0
+        }
+
+        .subtle {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* Modal */
+        dialog {
+            border: 0;
+            border-radius: 18px;
+            padding: 0;
+            width: min(680px, 96vw);
+            box-shadow: var(--shadow)
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .2)
+        }
+
+        .modal {
+            background: var(--card);
+            border-radius: 18px;
+            overflow: hidden
+        }
+
+        .modal header {
+            padding: 16px;
+            border-bottom: 1px solid #EEF3F2
+        }
+
+        body.dark .modal header {
+            border-bottom-color: #1E2A2E
+        }
+
+        .modal section {
+            padding: 18px
+        }
+
+        .timer {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 10px
+        }
+
+        .timer .time {
+            font-weight: 800;
+            font-size: 44px;
+            letter-spacing: 1px
+        }
+
+        .progress {
+            height: 12px;
+            width: 100%;
+            background: #E9F4F1;
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .progress>div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent));
+            transition: width .3s linear
+        }
+
+        /* Botões do modal alinhados e simétricos */
+        .timer .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
             justify-content: center;
-            color: #fff;
-            z-index: 1000;
-            transition: opacity 1s ease;
-            text-align: center;
+            width: 100%
         }
 
-        #splash.hidden {
-            opacity: 0;
-            pointer-events: none;
+        .timer .actions button {
+            flex: 1 1 140px
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #0b3d91, #1c64f2);
-            color: #fff;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        /* Balão de Respiração (contraste calmo + expansão maior/menor) */
+        .breath {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, var(--breath-center) 0, var(--breath-center) 38%, var(--breath-ring) 100%);
+            box-shadow: 0 0 0 3px var(--breath-outline) inset, var(--shadow);
+            display: grid;
+            place-items: center;
+            margin: 10px auto;
+            animation: pulse 8s ease-in-out infinite;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        @keyframes pulse {
+            0% {
+                transform: scale(0.92);
+                filter: saturate(0.95);
+            }
+
+            50% {
+                transform: scale(1.12);
+                filter: saturate(1.05);
+            }
+
+            100% {
+                transform: scale(0.92);
+                filter: saturate(0.95);
+            }
         }
 
-        header p {
-            font-size: 1.1rem;
+        .affirm {
+            background: linear-gradient(180deg, #FEFFFF, #F3FBF9);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px dashed #D8EEE9
         }
 
-        /* Conteúdo Principal */
-        main {
-            max-width: 960px;
-            margin: 2rem auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        body.dark .affirm {
+            background: linear-gradient(180deg, #132028, #1A2E37);
+            border-color: #23414A
         }
 
-        .instructions {
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #555;
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: #F0F7FF;
+            color: #0F345C;
+            font-weight: 700
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        /* GARDEN */
+        .garden {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #F4FBF9 0%, #FFFFFF 50%, #EAF6F3 100%);
+        }
+
+        body.dark .garden {
+            background: linear-gradient(180deg, #0F1B1E 0%, #0F1A1D 50%, #0F2226 100%);
+        }
+
+        .garden::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 46px;
+            background: linear-gradient(180deg, #D6EFE7, #C7E9DF);
+        }
+
+        body.dark .garden::after {
+            background: linear-gradient(180deg, #13282E, #103038);
+        }
+
+        .flower {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            transform: translate(-50%, -50%) scale(.6);
+            animation: pop .35s ease-out;
+        }
+
+        @keyframes pop {
+            from {
+                transform: translate(-50%, -50%) scale(.2);
+                opacity: 0
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(.6);
+                opacity: 1
+            }
+        }
+
+        .sky-bubbles {
+            position: absolute;
+            inset: 0;
+            opacity: .25;
+            pointer-events: none
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -30px;
+            width: 10px;
+            height: 10px;
+            background: #8EC5FF;
+            border-radius: 50%;
+            animation: rise 12s linear infinite
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-120vh)
+            }
+        }
+
+        .footer {
+            margin: 24px 0;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center
+        }
+
+        .signature {
+            margin-top: 6px;
+            font-weight: 700;
+            color: var(--ink)
+        }
+
+        .kbd {
+            border: 1px solid #d8e7e3;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: #f6fbfa
+        }
+
+        body.dark .kbd {
+            border-color: #244148;
+            background: #14262B;
+            color: #CDE3E0
+        }
+
+        /* Justificar conteúdo do bloco “Sobre o medo de mudar” (já estava, mantido) */
+        .justify {
             text-align: justify;
         }
 
-        .instructions p {
-            margin-bottom: 1rem;
-        }
-
-        /* Informações sobre LGPD integradas à introdução */
-        .instructions .lgpd {
-            font-size: 14px;
-            color: #777;
-            margin-top: 1rem;
-            border-top: 1px solid #ccc;
-            padding-top: 1rem;
-        }
-
-        .patient-info {
-            margin-bottom: 20px;
-        }
-
-        .patient-info input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #fafafa;
-        }
-
-        .question-section {
-            margin-bottom: 20px;
-        }
-
-        .question-section h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #2E8B57;
-        }
-
-        .question {
-            margin: 10px 0;
-            padding: 12px;
-            background-color: #eef9f0;
-            border-left: 4px solid #5CB85C;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .question label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            background-color: #fafafa;
-        }
-
-        /* Botões modernos e elegantes */
-        button {
-            background: linear-gradient(135deg, #2E8B57, #3CB371);
-            color: #fff;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background-color: #276746;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .gauge-container {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .gauge-container>div {
-            text-align: center;
-            margin: 10px;
-        }
-
-        .gauge-desc {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        /* Seção de Resultados */
-        .result-section {
-            background: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-
-        .result-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #0b3d91;
-        }
-
-        .result-item {
-            margin-bottom: 1rem;
-            font-size: 16px;
-        }
-
-        /* Rodapé limpo e proporcional */
-        footer {
-            background: #0b3d91;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-            margin-top: 30px;
-            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        footer p {
-            margin: 0.5rem 0;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-
-            main {
-                padding: 20px;
-            }
-
-            .instructions {
-                font-size: 14px;
-            }
-
-            button {
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            .gauge-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.8rem;
-                padding: 20px;
-            }
-
-            main {
-                padding: 15px;
-            }
-
-            .instructions {
-                font-size: 14px;
-            }
-
-            button {
-                padding: 10px;
-                font-size: 16px;
-            }
-
-            /* Ajuste específico para a splash screen em telas pequenas */
-            #splash {
-                padding: 20px;
-                text-align: center;
-            }
+        .justify li {
+            text-align: justify;
         }
     </style>
 </head>
 
 <body>
-    <!-- Splash Screen -->
-    <div id="splash">
-        <h1>Bem-vindo(a) à Escala de Codependência e Dependência Emocional</h1>
-        <p>Descubra seus padrões; desperte e transforme sua vida agora.</p>
+    <div class="wrap">
+        <header aria-label="Barra superior">
+            <div class="brand" role="banner" aria-label="Jardim do Autocuidado">
+                <span aria-hidden="true" class="icon">🌿</span>
+                <div>
+                    <h1>Jardim do Autocuidado</h1>
+                    <small>Um jogo de autocuidado gentil 🌱</small>
+                </div>
+            </div>
+            <div class="toolbar" role="toolbar" aria-label="Controles">
+                <span class="pill" title="Seu progresso hoje"><span aria-hidden>⭐</span> <span id="stars">0</span> pontos</span>
+                <span class="pill" title="Flores plantadas">🌼 <span id="flowerCount">0</span></span>
+                <button id="muteBtn" class="btn-ghost" aria-pressed="false" aria-label="Alternar sons">🔈 Som</button>
+                <button id="nightBtn" class="btn-secondary" aria-pressed="false" aria-label="Ativar/Desativar Modo Noturno">🌙 Modo Noturno: OFF</button>
+                <a class="btn-warn" id="cvvBtn" href="tel:188" aria-label="Precisa de ajuda agora? Ligar 188 do CVV">
+                    ❤️‍🩹 Precisa de ajuda agora? LIGAR 188 (CVV)
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <section class="card plant-area" aria-labelledby="plant-title">
+                <div>
+                    <div class="section-title">
+                        <h2 id="plant-title" style="margin:0">Seu jardim hoje</h2>
+                        <span class="subtle">Cada microação planta uma flor. Visualize seu progresso 🌼</span>
+                    </div>
+                    <div class="garden" id="garden" aria-live="polite" aria-label="Jardim. Cada flor representa uma missão concluída.">
+                        <div class="sky-bubbles" id="bubbles" aria-hidden="true"></div>
+                    </div>
+                    <div class="meter" aria-label="Meta do dia">
+                        <div id="meterFill" style="width:0%"></div>
+                    </div>
+                    <p class="subtle" style="margin-top:6px">Meta suave: 5 pontos hoje. Cada missão concluída planta uma flor. 💚</p>
+                </div>
+
+                <div>
+                    <div class="section-title">
+                        <h2 style="margin:0">Respirar e acalmar</h2>
+                        <span class="subtle">Use quando bater ansiedade</span>
+                    </div>
+                    <div class="card" aria-label="Exercício de respiração box">
+                        <div class="breath" id="breathCircle" aria-hidden="true"></div>
+                        <div style="text-align:center">
+                            <p id="breathCue" style="margin:6px 0; font-weight:700; text-align:center">Inspire (4)</p>
+                            <button class="btn-ghost" id="breathStart">▶️ Iniciar respiração 4–4–4–4</button>
+                        </div>
+                    </div>
+
+                    <div class="card" aria-label="Grounding 5-4-3-2-1">
+                        <h3>Grounding 5–4–3–2–1</h3>
+                        <p class="subtle">Olhe ao redor e diga:</p>
+                        <ul>
+                            <li>5 coisas que você vê</li>
+                            <li>4 coisas que você sente com o corpo</li>
+                            <li>3 sons que você escuta</li>
+                            <li>2 cheiros que percebe</li>
+                            <li>1 gosto que sente</li>
+                        </ul>
+                        <button class="btn-ghost" id="groundBtn">✨ Registrar como feito (1 ponto)</button>
+                    </div>
+
+                    <div class="affirm" aria-label="Palavras suaves">
+                        <p id="affirmText" style="margin:0; font-weight:600; text-align:justify">Pequenos passos contam. Você não precisa sentir vontade para começar; a vontade aparece depois do primeiro passo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Missões de autocuidado (ativação comportamental)</h2>
+                    <span class="subtle">Escolha 1 missão. Depois, se quiser, mais uma. Sem pressa.</span>
+                </div>
+
+                <div class="grid" role="list" aria-label="Lista de missões">
+                    <!-- Higiene & cuidados essenciais -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🪥 Escovar dentes</div>
+                        <h3>Brilho rápido — 60s</h3>
+                        <p>30s acima + 30s abaixo. Gentileza &gt; perfeição.</p>
+                        <button class="btn" data-mission="dentes">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💇‍♀‍ Pentear</div>
+                        <h3>3 passes gentis — 60s</h3>
+                        <p>Penteie devagar, três passes por região. Cuide de você como de uma amiga.</p>
+                        <button class="btn" data-mission="cabelo">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🚿 Banho</div>
+                        <h3>Banho essencial — 2 min</h3>
+                        <p>Áreas essenciais, água morna e respiração calma.</p>
+                        <button class="btn" data-mission="banho">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🖐️ Mãos</div>
+                        <h3>Lavar as mãos — 30s</h3>
+                        <p>Água, sabão e carinho — palma, dorso, entre os dedos.</p>
+                        <button class="btn" data-mission="maos">Começar missão</button>
+                    </article>
+
+                    <!-- Ambiente -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🧺 Quarto</div>
+                        <h3>Arrumação turbo — 3 min</h3>
+                        <p>Roupas no cesto e travesseiro alinhado. O básico já muda o clima.</p>
+                        <button class="btn" data-mission="quarto">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🪟 Janela</div>
+                        <h3>Abrir + 5 respirações — 1 min</h3>
+                        <p>Abra a janela, sinta o ar e faça 5 respirações lentas.</p>
+                        <button class="btn" data-mission="janela">Começar missão</button>
+                    </article>
+
+                    <!-- Corpo & energia -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">☀️ Sol</div>
+                        <h3>Sol na janela — 2 min</h3>
+                        <p>Luz suave no rosto ou nos braços. Segurança em primeiro lugar.</p>
+                        <button class="btn" data-mission="sol">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🧘 Alongar</div>
+                        <h3>Alongamento suave — 1 min</h3>
+                        <p>Pescoço, ombros e braços. Movimento sem dor.</p>
+                        <button class="btn" data-mission="alongar">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🚶 Passos</div>
+                        <h3>30 passos no quarto — 60s</h3>
+                        <p>Caminhe devagar, conte até 30. Respire junto dos passos.</p>
+                        <button class="btn" data-mission="passos">Começar missão</button>
+                    </article>
+
+                    <!-- Hidratar & nutrição simples -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💧 Hidratar</div>
+                        <h3>Copo d’água — agora</h3>
+                        <p>Encha um copo e beba devagar, observando a sensação.</p>
+                        <button class="btn" data-mission="agua">Concluir (instantâneo)</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🥪 Lanche</div>
+                        <h3>Lanche simples — 2 min</h3>
+                        <p>1 fruta ou pão com algo leve. Só o suficiente.</p>
+                        <button class="btn" data-mission="lanche">Começar missão</button>
+                    </article>
+
+                    <!-- Conexão & prazer -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🎵 Música</div>
+                        <h3>Música favorita — 90s</h3>
+                        <p>Ouça 90s de uma faixa que te faz bem.</p>
+                        <button class="btn" data-mission="musica">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💬 Contato</div>
+                        <h3>Enviar um emoji — agora</h3>
+                        <p>Mande um 👍 ou 🌿 para alguém de confiança.</p>
+                        <button class="btn" data-mission="contato">Concluir (instantâneo)</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">📝 Registro</div>
+                        <h3>Uma coisa que valeu — 1 min</h3>
+                        <p>Escreva uma linha sobre algo pequeno que valeu hoje.</p>
+                        <button class="btn" data-mission="registro">Começar missão</button>
+                    </article>
+
+                    <!-- Autocompaixão -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🤍 Autocompaixão</div>
+                        <h3>Mensagem que abraça — 1 min</h3>
+                        <p>Leia: “Estou fazendo o melhor que consigo hoje. Eu mereço cuidados gentis”.</p>
+                        <button class="btn" data-mission="compaixao">Começar missão</button>
+                    </article>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Sobre o medo de mudar</h2>
+                </div>
+                <div class="card justify">
+                    <p><strong>Ideia-chave:</strong> melhorar não significa ser abandonada. Seu valor não depende do que você faz hoje. As pessoas que importam querem você <em>viva e menos sobrecarregada</em>, um passo de cada vez.</p>
+                    <ul>
+                        <li><strong>Experimento gentil:</strong> faça 1 microação e observe: alguém deixa de gostar de você por isso? Registre a evidência.</li>
+                        <li><strong>Contrato consigo:</strong> “Se eu der pequenos passos por 7 dias, vou me dar um presente simples (música, banho cheiroso, 10 min de sol).”</li>
+                        <li><strong>Frase-âncora:</strong> “Eu posso melhorar sem me perder. Eu sigo comigo.”</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Conquistas</h2>
+                    <span class="subtle">Selos por presença, não por perfeição</span>
+                </div>
+                <div class="card badges" id="badges" aria-live="polite"></div>
+            </section>
+
+            <p class="footer">
+                Este jogo é um apoio terapêutico e <strong>não substitui</strong> acompanhamento profissional. Em crise, toque em <strong id="cvvCtaInline">“LIGAR 188 (CVV)”</strong> acima para falar com alguém agora. Seus dados ficam apenas no seu dispositivo (localStorage).
+                <br />
+                <span class="signature">
+                    Thaís Campos, Psicóloga Clínica. WhatsApp:
+                    <a href="https://wa.me/5535984647323">(35) 98464-7323</a>.
+                </span>
+            </p>
+        </main>
     </div>
-    <header>
-        <h1>Escala de Codependência e Dependência Emocional</h1>
-        <p>Uma ferramenta para compreender e melhorar seus relacionamentos</p>
-    </header>
-    <main>
-        <!-- Introdução orientativa com copywriting e informação sobre LGPD -->
-        <section class="instructions">
-            <p>Olá! Seja bem-vindo(a) à nossa avaliação. Esta escala foi cuidadosamente desenvolvida para identificar a presença e a intensidade dos sentimentos de dependência e codependência emocional em seus relacionamentos. Leia atentamente cada afirmação e selecione a opção que melhor reflete a sua experiência.</p>
-            <p><strong>Como responder:</strong> Utilize a seguinte escala – Discordo Totalmente, Discordo, Neutro, Concordo e Concordo Totalmente – para marcar sua resposta a cada afirmação.</p>
-            <p>Sua sinceridade é fundamental para que possamos oferecer uma análise fiel do seu estado emocional. Não há respostas certas ou erradas – o que importa é que os resultados reflitam quem você é hoje. Ao final, você receberá uma interpretação completa, com orientações que um psicólogo clínico recomendaria para auxiliar na promoção do seu bem-estar e equilíbrio emocional.</p>
-            <p class="lgpd">Observação: Seus dados serão tratados em conformidade com a Lei Geral de Proteção de Dados (LGPD), garantindo sua privacidade e segurança.</p>
-        </section>
-        <!-- Formulário de avaliação -->
-        <form id="scaleForm">
-            <section class="patient-info">
-                <input type="text" id="fullName" placeholder="Nome completo" required>
-                <input type="email" id="email" placeholder="E-mail" required>
-                <input type="text" id="phoneNumber" placeholder="Telefone">
-                <input type="text" id="age" placeholder="Idade">
-                <input type="date" id="date" placeholder="Data de realização do teste" required>
-            </section>
-            <!-- Seção de Dependência Emocional (Perguntas 1 a 20) -->
-            <section class="question-section">
-                <h2>Dependência Emocional</h2>
-                <div class="question">
-                    <label>1. Eu sinto que preciso da aprovação dos outros para me sentir bem comigo mesmo.</label>
-                    <select name="q1" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>2. Eu me sinto ansioso(a) quando estou sozinho(a).</label>
-                    <select name="q2" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>3. Eu evito tomar decisões importantes sem consultar alguém em quem confio.</label>
-                    <select name="q3" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>4. Eu me preocupo excessivamente em agradar os outros.</label>
-                    <select name="q4" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>5. Eu sinto que não consigo viver sem meu parceiro(a).</label>
-                    <select name="q5" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>6. Eu mudo meus planos frequentemente para acomodar os desejos dos outros.</label>
-                    <select name="q6" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>7. Eu me sinto inseguro(a) quando estou longe das pessoas que amo.</label>
-                    <select name="q7" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>8. Eu frequentemente busco reafirmação de que sou amado(a).</label>
-                    <select name="q8" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>9. Eu me sinto incapaz de ser feliz sem estar em um relacionamento.</label>
-                    <select name="q9" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>10. Eu tenho medo constante de ser rejeitado(a) ou abandonado(a).</label>
-                    <select name="q10" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>11. Eu fico preocupado(a) se alguém que amo não responde rapidamente às minhas mensagens.</label>
-                    <select name="q11" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>12. Eu me sinto vulnerável sem o apoio de alguém próximo.</label>
-                    <select name="q12" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>13. Eu evito atividades sociais se meu parceiro(a) não pode ir.</label>
-                    <select name="q13" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>14. Eu me sinto perdido(a) sem orientação de pessoas importantes para mim.</label>
-                    <select name="q14" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>15. Eu preciso de reafirmação constante para me sentir seguro(a) sobre minhas decisões.</label>
-                    <select name="q15" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>16. Eu me sinto incompleto(a) quando não estou em um relacionamento amoroso.</label>
-                    <select name="q16" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>17. Eu mudo meus gostos e preferências para agradar aos outros.</label>
-                    <select name="q17" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>18. Eu faço de tudo para evitar ser rejeitado(a).</label>
-                    <select name="q18" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>19. Eu me preocupo demais com o que os outros pensam de mim.</label>
-                    <select name="q19" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>20. Eu dependo emocionalmente das opiniões das pessoas próximas a mim.</label>
-                    <select name="q20" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-            </section>
-            <!-- Seção de Codependência Emocional (Perguntas 21 a 40) -->
-            <section class="question-section">
-                <h2>Codependência Emocional</h2>
-                <div class="question">
-                    <label>21. Eu sinto que preciso cuidar dos problemas dos outros, mesmo que isso me prejudique.</label>
-                    <select name="q21" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>22. Eu tenho dificuldade em dizer "não" quando alguém pede minha ajuda.</label>
-                    <select name="q22" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>23. Eu coloco as necessidades dos outros antes das minhas.</label>
-                    <select name="q23" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>24. Eu sinto que sou responsável pela felicidade dos outros.</label>
-                    <select name="q24" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>25. Eu frequentemente me envolvo em relacionamentos com pessoas que têm problemas sérios (por exemplo, abuso de substâncias).</label>
-                    <select name="q25" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>26. Eu me sinto ansioso(a) se não estou no controle das situações.</label>
-                    <select name="q26" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>27. Eu evito conflitos ao assumir responsabilidades que não são minhas.</label>
-                    <select name="q27" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>28. Eu negligencio minhas próprias necessidades em favor dos outros.</label>
-                    <select name="q28" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>29. Eu sinto que minha identidade está fortemente ligada ao meu papel de cuidador(a).</label>
-                    <select name="q29" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>30. Eu tenho dificuldade em estabelecer limites claros com os outros.</label>
-                    <select name="q30" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>31. Eu sinto culpa quando priorizo minhas próprias necessidades.</label>
-                    <select name="q31" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>32. Eu me sinto responsável pelos sentimentos das pessoas ao meu redor.</label>
-                    <select name="q32" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>33. Eu evito pedir ajuda mesmo quando preciso.</label>
-                    <select name="q33" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>34. Eu me preocupo constantemente com os problemas dos outros.</label>
-                    <select name="q34" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>35. Eu assumo a responsabilidade por resolver os problemas dos outros.</label>
-                    <select name="q35" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>36. Eu sinto que preciso estar sempre disponível para os outros.</label>
-                    <select name="q36" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>37. Eu tenho medo de que os outros se sintam abandonados se eu não estiver presente.</label>
-                    <select name="q37" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>38. Eu evito expressar meus próprios sentimentos para não sobrecarregar os outros.</label>
-                    <select name="q38" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>39. Eu me sinto obrigado(a) a ajudar os outros, mesmo quando estou sobrecarregado(a).</label>
-                    <select name="q39" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-                <div class="question">
-                    <label>40. Eu me preocupo mais com os problemas dos outros do que com os meus próprios.</label>
-                    <select name="q40" required>
-                        <option value="1">Discordo Totalmente</option>
-                        <option value="2">Discordo</option>
-                        <option value="3">Neutro</option>
-                        <option value="4">Concordo</option>
-                        <option value="5">Concordo Totalmente</option>
-                    </select>
-                </div>
-            </section>
-            <!-- Velocímetros -->
-            <section class="gauge-container">
-                <div>
-                    <div id="depGauge"></div>
-                    <div class="gauge-desc">DEPENDÊNCIA EMOCIONAL</div>
-                </div>
-                <div>
-                    <div id="codepGauge"></div>
-                    <div class="gauge-desc">CODEPENDÊNCIA EMOCIONAL</div>
-                </div>
-            </section>
-            <!-- Botão para calcular -->
-            <button type="button" onclick="calculateScore()">Calcular Resultados</button>
-        </form>
-        <!-- Seção de resultados -->
-        <section id="result" class="result-section">
-            <h2>Resultados da Avaliação</h2>
-            <div class="result-item" id="dependenciaResultado"></div>
-            <div class="result-item" id="codependenciaResultado"></div>
-            <div id="whatsappLink" style="margin-top: 20px; text-align: center;"></div>
-        </section>
-    </main>
-    <!-- Rodapé limpo e proporcional -->
-    <footer>
-        <p>&copy; 2025 - Todos os direitos reservados. Thaís Campos – Psicóloga Clínica</p>
-    </footer>
-    <!-- JavaScript moderno ES6+ -->
-    <script type="module">
-        let depGauge, codepGauge;
 
-        window.addEventListener('load', () => {
-            // Ocultar o splash após 2 segundos e depois remover da exibição
-            setTimeout(() => {
-                const splash = document.getElementById('splash');
-                if (splash) {
-                    splash.classList.add('hidden');
-                    setTimeout(() => splash.style.display = 'none', 1000);
+    <!-- Modal de missão -->
+    <dialog id="missionModal" aria-labelledby="missionTitle">
+        <div class="modal">
+            <header>
+                <h3 id="missionTitle" style="margin:0">Missão</h3>
+            </header>
+            <section>
+                <div id="missionDesc" class="subtle" style="margin-bottom:10px"></div>
+                <div class="timer" aria-live="polite">
+                    <div class="time" id="time">00:00</div>
+                    <div class="progress">
+                        <div id="bar"></div>
+                    </div>
+                    <div id="stepText" style="font-weight:700; text-align:center"></div>
+                    <div class="actions">
+                        <button id="startBtn" class="btn-ok">▶️ Iniciar</button>
+                        <button id="pauseBtn" class="btn-ghost">⏸️ Pausar</button>
+                        <button id="finishBtn" class="btn">✅ Concluir</button>
+                        <button id="closeBtn" class="btn-warn">✖️ Fechar</button>
+                    </div>
+                </div>
+                <details style="margin-top:10px">
+                    <summary><strong>Dicas compassivas</strong></summary>
+                    <ul>
+                        <li>Não precisa de perfeição; só presença.</li>
+                        <li>Se cansar, pause. Voltar já é vitória.</li>
+                        <li>Fale consigo como falaria com uma amiga querida.</li>
+                    </ul>
+                </details>
+            </section>
+        </div>
+    </dialog>
+
+    <script>
+        // ========= Estado =========
+        const state = {
+            stars: 0,
+            muted: false,
+            night: false, // substitui "safe"
+            badges: new Set(),
+            doneToday: {},
+            flowers: [], // {xPerc,yPerc,color}
+        };
+
+        // ========= Utilidades =========
+        const $ = sel => document.querySelector(sel);
+        const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+        // Persistência simples
+        const save = () => {
+            try {
+                localStorage.setItem('jardim-autocuidado', JSON.stringify({
+                    stars: state.stars,
+                    badges: [...state.badges],
+                    doneToday: state.doneToday,
+                    flowers: state.flowers,
+                    night: state.night,
+                }));
+            } catch (e) {}
+        };
+        const load = () => {
+            try {
+                const d = JSON.parse(localStorage.getItem('jardim-autocuidado')) || {};
+                state.stars = d.stars || 0;
+                state.badges = new Set(d.badges || []);
+                state.doneToday = d.doneToday || {};
+                state.flowers = d.flowers || [];
+                state.night = !!d.night;
+                if (state.night) document.body.classList.add('dark');
+            } catch (e) {}
+        };
+
+        // ========= Áudio =========
+        let audioCtx, masterGain;
+
+        function ensureAudio() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioCtx.createGain();
+                    masterGain.gain.value = 0.6; // volume global
+                    masterGain.connect(audioCtx.destination);
+                } else if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
                 }
-            }, 2000);
+            } catch (e) {}
+        }
 
-            // Inicialização dos velocímetros (mantendo a lógica de correção)
-            depGauge = new JustGage({
-                id: "depGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "DEPENDÊNCIA EMOCIONAL",
-                label: "pontos",
-                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
+        function tone(freq = 660, dur = 0.09, type = 'square', vol = 0.15) {
+            if (state.muted) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = type;
+            o.frequency.value = freq;
+            g.gain.value = 0.0001;
+            o.connect(g).connect(masterGain);
+            o.start();
+            const now = audioCtx.currentTime;
+            g.gain.exponentialRampToValueAtTime(vol, now + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.00001, now + dur);
+            o.stop(now + dur + 0.02);
+        }
+
+        function tick() {
+            tone(900, 0.06, 'square', 0.18);
+        }
+
+        // Avisos suaves
+        const affirmations = [
+            'Pequenos passos contam. Você é importante.',
+            'Gentileza consigo mesma é força, não fraqueza.',
+            'Você pode pausar e recomeçar. Isso também é cuidado.',
+            'Hoje, 1%. Amanhã, quem sabe 1% de novo.',
+            'Você não está sozinha. Este passo já é coragem.',
+            'Melhorar não significa perder; significa se acolher.',
+        ];
+
+        function setAffirm() {
+            $('#affirmText').textContent = affirmations[Math.floor(Math.random() * affirmations.length)];
+        }
+
+        // ========= Jardim =========
+        const COLORS = ['#FFDF7D', '#FFD1E1', '#D9C4FF', '#BFF2D6', '#FFE9A8', '#FFC6A8'];
+
+        function renderGarden() {
+            const g = $('#garden');
+            g.querySelectorAll('.flower').forEach(el => el.remove());
+            state.flowers.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'flower';
+                el.style.left = f.xPerc + '%';
+                el.style.top = f.yPerc + '%';
+                el.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" aria-label="Flor"><g>
+          <circle cx="12" cy="12" r="10" fill="${f.color}" stroke="#F6C453" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="#F6A800"/>
+        </g></svg>`;
+                g.appendChild(el);
             });
-            codepGauge = new JustGage({
-                id: "codepGauge",
-                value: 0,
-                min: 0,
-                max: 100,
-                title: "CODEPENDÊNCIA EMOCIONAL",
-                label: "pontos",
-                levelColors: ["#00e400", "#ffff00", "#ff7e00", "#ff0000"]
-            });
+            $('#flowerCount').textContent = state.flowers.length;
+        }
+
+        function addFlower() {
+            const g = $('#garden');
+            const rect = g.getBoundingClientRect();
+            const margin = 8;
+            const x = margin + Math.random() * (rect.width - margin * 2);
+            const y = margin + Math.random() * (rect.height - margin * 2);
+            const f = {
+                xPerc: (x / rect.width * 100),
+                yPerc: (y / rect.height * 100),
+                color: COLORS[Math.floor(Math.random() * COLORS.length)]
+            };
+            state.flowers.push(f);
+            save();
+            renderGarden();
+        }
+
+        function renderBubbles() {
+            const c = $('#bubbles');
+            c.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                b.style.left = Math.random() * 100 + '%';
+                b.style.animationDelay = (Math.random() * 10) + 's';
+                b.style.opacity = 0.2 + Math.random() * 0.4;
+                c.appendChild(b);
+            }
+        }
+
+        function updateUI() {
+            $('#stars').textContent = state.stars;
+            const pct = Math.min(100, (state.stars / 5) * 100);
+            $('#meterFill').style.width = pct + '%';
+            setAffirm();
+            renderBadges();
+            renderGarden();
+            renderBubbles();
+            // Atualiza botões
+            $('#nightBtn').textContent = state.night ? '🌙 Modo Noturno: ON' : '🌙 Modo Noturno: OFF';
+            $('#nightBtn').setAttribute('aria-pressed', String(state.night));
+            $('#muteBtn').textContent = state.muted ? '🔇 Sem som' : '🔈 Som';
+            $('#muteBtn').setAttribute('aria-pressed', String(state.muted));
+            save();
+        }
+
+        function addStars(n) {
+            state.stars = Math.max(0, state.stars + n);
+            if (state.stars >= 1) state.badges.add('Primeiro passo');
+            if (state.stars >= 3) state.badges.add('Regador Gentil');
+            if (state.stars >= 5) state.badges.add('Meta do Dia 💚');
+            updateUI();
+        }
+
+        function renderBadges() {
+            const box = $('#badges');
+            box.innerHTML = [...state.badges].map(b => `<span class="badge">🏅 ${b}</span>`).join('');
+        }
+
+        // ========= Respiração =========
+        let breathTimer, breathPhase = 0,
+            breathCount = 0; // 0 in, 1 hold, 2 out, 3 hold
+        function nextBreathPhase() {
+            const cues = ['Inspire (4)', 'Segure (4)', 'Expire (4)', 'Segure (4)'];
+            $('#breathCue').textContent = cues[breathPhase];
+            breathPhase = (breathPhase + 1) % 4;
+            breathCount++;
+            if (breathCount % 4 === 0) {
+                setAffirm();
+                tone(520, .12, 'sine', 0.1)
+            }
+        }
+        $('#breathStart').addEventListener('click', () => {
+            ensureAudio();
+            clearInterval(breathTimer);
+            breathPhase = 0;
+            breathCount = 0;
+            nextBreathPhase();
+            breathTimer = setInterval(nextBreathPhase, 4000);
         });
 
-        // Calcula os totais e utiliza a lógica original (soma dos escores) para correção
-        const updateGauge = () => {
-            let totalDep = 0,
-                totalCodep = 0;
-            const formData = new FormData(document.getElementById('scaleForm'));
-            formData.forEach((value, key) => {
-                if (key.startsWith('q')) {
-                    const val = parseInt(value);
-                    // Se o número da questão (extraído de key) for menor ou igual a 20, soma para Dependência; caso contrário para Codependência
-                    if (parseInt(key.substring(1)) <= 20) totalDep += val;
-                    else totalCodep += val;
-                }
-            });
-            depGauge.refresh(totalDep);
-            codepGauge.refresh(totalCodep);
-            displayResults(totalDep, totalCodep);
-        };
+        // ========= Grounding =========
+        $('#groundBtn').addEventListener('click', () => {
+            ensureAudio();
+            addStars(1);
+            tone(660, .1)
+        });
 
-        // Função que interpreta os resultados conforme faixas de pontuação
-        const getResultDescription = (score, type) => {
-            let resultText = "";
+        // ========= Missões =========
+        const missions = {
+            // Higiene
+            dentes: {
+                title: 'Escovar dentes — 60s',
+                points: 2,
+                desc: '30s arcada de cima, 30s arcada de baixo. Gentileza > perfeição.',
+                steps: [{
+                    label: 'Parte de cima (30s)',
+                    secs: 30
+                }, {
+                    label: 'Parte de baixo (30s)',
+                    secs: 30
+                }]
+            },
+            cabelo: {
+                title: 'Pentear — 60s',
+                points: 1,
+                desc: 'Três passes por região, movimento lento e gentil.',
+                steps: [{
+                    label: 'Topo e laterais (30s)',
+                    secs: 30
+                }, {
+                    label: 'Nuca e comprimento (30s)',
+                    secs: 30
+                }]
+            },
+            banho: {
+                title: 'Banho essencial — 2min',
+                points: 2,
+                desc: 'Áreas essenciais, água morna e respiração calma.',
+                steps: [{
+                    label: 'Pescoço e axilas (40s)',
+                    secs: 40
+                }, {
+                    label: 'Partes íntimas (40s)',
+                    secs: 40
+                }, {
+                    label: 'Pés e enxágue (40s)',
+                    secs: 40
+                }]
+            },
+            maos: {
+                title: 'Lavar as mãos — 30s',
+                points: 1,
+                desc: 'Palmas, dorso e entre os dedos.',
+                steps: [{
+                    label: 'Lavar gentilmente (30s)',
+                    secs: 30
+                }]
+            },
 
-            // Faixa "Normal" para qualquer tipo (score <= 39)
-            if (score <= 39) {
-                resultText = `
-		      <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		        Normal: Você apresenta poucos sinais relacionados a este tipo de comportamento. 
-		        <br><br>
-		        Isso significa que, no momento, você consegue manter um equilíbrio saudável em seus relacionamentos, 
-		        possuindo boa capacidade de tomar decisões de forma independente e de cuidar de si mesmo(a) 
-		        sem se anular pelos outros. 
-		        <br><br>
-		        Continue fortalecendo sua autoestima e sua autonomia, 
-		        pois isso ajuda a prevenir problemas futuros e a manter uma boa qualidade de vida, 
-		        tanto no campo afetivo quanto profissional.
-		      </div>
-		    `;
-            } else {
-                if (type === 'Dependência Emocional') {
-                    /* DEFINIÇÃO DE DEPENDÊNCIA EMOCIONAL */
-                    if (score <= 59) {
-                        // Faixa "Leve" (Dependência Emocional)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            A Dependência Emocional ocorre quando sentimos grande dificuldade em ficar bem 
-		            sem o suporte ou aprovação constante de outra pessoa, geralmente um parceiro(a) ou familiares. 
-		            Isso pode se desenvolver em contextos de infância onde os cuidadores eram inconsistentes 
-		            ou críticos, fazendo com que a pessoa busque validação externa para se sentir segura.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Leve</span>: Você apresenta alguns sinais de Dependência Emocional, 
-		          mas esses traços não são dominantes. Em algumas situações, 
-		          pode haver maior necessidade de aprovação ou dificuldade em tomar decisões sozinho(a).
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Infância com cuidadores instáveis ou críticos, 
-		          aprendizados de que a aprovação dos outros é essencial para se sentir bem. 
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong> 
-		          - Necessidade de aprovação para se sentir seguro(a).<br>
-		          - Medo leve de rejeição ou de desagradar.<br>
-		          - Tendência a buscar conselhos antes de decisões importantes.<br><br>
-		          <strong>Impactos:</strong> Pode haver alguma insegurança em relacionamentos afetivos 
-		          e até mesmo profissionais, porém ainda não em grau severo. 
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Fortalecer a autoestima por meio de atividades que promovam autonomia (ex.: 
-		            cursos, hobbies, terapia).<br>
-		          - Aprender a estabelecer limites saudáveis e comunicar suas necessidades de forma clara.<br>
-		          - Praticar a autoafirmação, valorizando suas próprias opiniões e conquistas.<br>
-		          - Procurar ajuda de um psicólogo, caso perceba aumento dos sintomas.
-		        `;
-                    } else if (score <= 79) {
-                        // Faixa "Moderada" (Dependência Emocional)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            A Dependência Emocional envolve um padrão de grande insegurança e necessidade 
-		            de aprovação contínua de outras pessoas. Com frequência, isso se manifesta em relacionamentos 
-		            afetivos e familiares, podendo levar a comportamentos de “agradar a qualquer custo”.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Moderada</span>: Você apresenta sinais mais significativos de Dependência Emocional, 
-		          como ansiedade intensa em ficar sozinho(a), medo de rejeição ou necessidade frequente 
-		          de confirmação dos outros.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias disfuncionais ou com traumas, 
-		          onde houve pouco incentivo à autonomia. 
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Grande dificuldade em tomar decisões sem aprovação externa.<br>
-		          - Medo constante de desagradar ou ser abandonado(a).<br>
-		          - Relações desequilibradas (ciúmes, possessividade).<br><br>
-		          <strong>Impactos:</strong> Relações afetivas podem se tornar fonte de angústia e insegurança, 
-		          afetando também o desempenho profissional (medo de errar, de não ser aceito(a)). 
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Buscar apoio terapêutico para aprender a se posicionar e a reconhecer seu valor pessoal.<br>
-		          - Desenvolver habilidades de comunicação assertiva e reforçar a autoestima.<br>
-		          - Praticar atividades que promovam independência (ex.: viajar sozinho(a), 
-		            tomar decisões em pequenos projetos).<br>
-		          - Explorar técnicas de regulação emocional, como meditação ou exercícios de respiração.
-		        `;
-                    } else {
-                        // Faixa "Alta" (Dependência Emocional)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Dependência Emocional?</strong><br>
-		            Trata-se de uma condição em que a pessoa depende fortemente da aprovação e do afeto 
-		            de outra(s) pessoa(s), podendo abrir mão de suas próprias necessidades para evitar rejeição.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Alta</span>: Você apresenta sinais intensos de Dependência Emocional, 
-		          o que indica necessidade de intervenção mais estruturada. Pode haver forte insegurança, 
-		          baixa autoestima e até isolamento para evitar críticas.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Histórico prolongado de relacionamentos 
-		          onde você não se sentia valorizado(a) sem a validação do outro, ambientes familiares 
-		          superprotetores ou extremamente críticos.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Necessidade constante de aprovação e medo exagerado de rejeição.<br>
-		          - Sentimentos de vazio quando está sem um relacionamento afetivo.<br>
-		          - Comportamentos de submissão ou anulação pessoal para evitar conflitos.<br><br>
-		          <strong>Impactos:</strong> Relações desequilibradas, ansiedade frequente, ciúmes e possessividade, 
-		          prejuízos em projetos profissionais por insegurança em tomar decisões.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Procurar psicoterapia (por exemplo, terapia cognitivo-comportamental) para desenvolver 
-		            autonomia emocional e autoaceitação.<br>
-		          - Investir em grupos de apoio ou atividades que reforcem seu senso de identidade e valor próprio.<br>
-		          - Aprender técnicas de enfrentamento de ansiedade e fortalecimento de habilidades sociais.<br>
-		          - Evitar relacionamentos abusivos, estabelecendo limites claros e saudáveis.
-		        `;
-                    }
-                }
-                // CODEPENDÊNCIA EMOCIONAL
-                else if (type === 'Codependência Emocional') {
-                    if (score <= 59) {
-                        // Faixa "Leve" (Codependência)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            É um padrão de comportamento em que a pessoa se dedica intensamente aos problemas e necessidades 
-		            dos outros, negligenciando as próprias. Muitas vezes, essa postura é aprendida em famílias 
-		            onde havia um membro vulnerável (ex.: doente, dependente químico) e a pessoa assumiu 
-		            responsabilidades emocionais excessivas.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Leve</span>: Você apresenta alguns traços de Codependência, mas eles não são dominantes. 
-		          Em algumas situações, pode priorizar as necessidades alheias, sentindo-se culpado(a) 
-		          ao cuidar de si mesmo(a).
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Lares com cuidadores que demandavam muito apoio emocional, 
-		          ensinando a se sacrificar para manter a harmonia familiar.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Dificuldade moderada em dizer “não”.<br>
-		          - Culpa leve ao estabelecer limites ou priorizar suas próprias necessidades.<br>
-		          - Tendência a se sentir responsável pelo bem-estar dos outros.<br><br>
-		          <strong>Impactos:</strong> Pode haver algum desgaste emocional e prejuízos leves 
-		          nos relacionamentos afetivos, embora ainda não intensos.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Praticar a autocompaixão, lembrando-se de que suas necessidades também importam.<br>
-		          - Buscar informações sobre assertividade e exercícios que reforcem seu espaço pessoal.<br>
-		          - Refletir sobre a origem desse padrão e, se necessário, procurar ajuda profissional 
-		            para prevenir agravamentos.
-		        `;
-                    } else if (score <= 79) {
-                        // Faixa "Moderada" (Codependência)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            A Codependência Emocional caracteriza-se por uma dedicação exagerada aos problemas dos outros, 
-		            assumindo responsabilidades que não são suas e sentindo-se culpado(a) quando tenta 
-		            priorizar a si mesmo(a).
-		          </div>
-		          <span style="color: red; font-weight: bold;">Moderada</span>: Você apresenta sinais mais marcantes de Codependência, 
-		          frequentemente se colocando em segundo plano para cuidar dos outros. 
-		          Isso pode resultar em desgaste emocional e dificuldade de impor limites.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias com membro vulnerável (ex.: dependente químico), 
-		          ensinando a “salvar” o outro a qualquer custo.
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Sentir-se responsável pelas emoções das pessoas próximas.<br>
-		          - Dificuldade de dizer “não”, mesmo em situações que lhe causam sobrecarga.<br>
-		          - Medo de que os outros se sintam abandonados se você não estiver disponível.<br><br>
-		          <strong>Impactos:</strong> Relações desequilibradas, exaustão mental, potencial queda de produtividade 
-		          no trabalho devido à preocupação constante com os problemas alheios.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Aprender a estabelecer limites claros e a reconhecer suas próprias necessidades 
-		            como legítimas.<br>
-		          - Praticar o autocuidado e a autoafirmação, identificando situações em que você possa 
-		            recusar demandas excessivas.<br>
-		          - Considerar buscar terapia para entender a raiz desse comportamento e desenvolver estratégias 
-		            de equilíbrio emocional.
-		        `;
-                    } else {
-                        // Faixa "Alta" (Codependência)
-                        resultText = `
-		          <div style="background-color: #fff9e6; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-		            <strong style="color: #555;">O que é Codependência Emocional?</strong><br>
-		            É um estado em que a pessoa se sobrecarrega assumindo os problemas e necessidades dos outros, 
-		            ignorando as próprias, e frequentemente sentindo culpa ou medo de abandono 
-		            quando tenta impor limites.
-		          </div>
-		          <span style="color: red; font-weight: bold;">Alta</span>: Você apresenta sinais muito fortes de Codependência Emocional, 
-		          indicando que pode estar se sacrificando em excesso e experimentando grande desgaste emocional. 
-		          Esse quadro demanda atenção, pois pode levar a sofrimento intenso.
-		          <br><br>
-		          <strong>Possíveis Origens:</strong> Famílias em que havia grande pressão para cuidar de alguém 
-		          doente ou em situação de vulnerabilidade, ausência de limites claros, sentimento de culpa 
-		          ao pensar em si mesmo(a).
-		          <br><br>
-		          <strong>Sintomas/Comportamentos:</strong>
-		          - Sensação de obrigação constante de ajudar, mesmo em detrimento de sua saúde mental.<br>
-		          - Culpa intensa ao priorizar suas necessidades ou dizer “não”.<br>
-		          - Receio de perder afeto se não estiver sempre disponível.<br><br>
-		          <strong>Impactos:</strong> Relações afetivas e profissionais podem se tornar insustentáveis, 
-		          com sensação de exaustão, ansiedade e até problemas de autoestima.
-		          <br><br>
-		          <strong>Recomendações (O que fazer):</strong>
-		          - Procurar auxílio psicológico, como terapia cognitivo-comportamental, para reestruturar 
-		            crenças de auto-sacrifício e desenvolver autonomia.<br>
-		          - Exercitar a distinção entre ajudar de forma saudável e assumir problemas que não são seus.<br>
-		          - Praticar o autoconhecimento, identificando limites pessoais e aprendendo a dizer “não” 
-		            quando necessário.<br>
-		          - Buscar grupos de apoio ou leituras que reforcem a importância do autocuidado e do equilíbrio 
-		            emocional.
-		        `;
-                    }
-                }
+            // Ambiente
+            quarto: {
+                title: 'Arrumação turbo — 3min',
+                points: 2,
+                desc: 'Roupas no cesto e travesseiro alinhado. O básico já ajuda.',
+                steps: [{
+                    label: 'Juntar roupas (60s)',
+                    secs: 60
+                }, {
+                    label: 'Cama e travesseiro (60s)',
+                    secs: 60
+                }, {
+                    label: 'Lixo leve / mesa (60s)',
+                    secs: 60
+                }]
+            },
+            janela: {
+                title: 'Abrir janela + 5 respirações — 1min',
+                points: 1,
+                desc: 'Abra a janela e faça 5 respirações lentas.',
+                steps: [{
+                    label: 'Respirar com a janela aberta (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Corpo & energia
+            sol: {
+                title: 'Sol na janela — 2min',
+                points: 2,
+                desc: 'Luz suave no rosto/braços (se seguro).',
+                steps: [{
+                    label: 'Aproveitar a luz (60s)',
+                    secs: 60
+                }, {
+                    label: 'Perceber o corpo (60s)',
+                    secs: 60
+                }]
+            },
+            alongar: {
+                title: 'Alongamento suave — 1min',
+                points: 1,
+                desc: 'Pescoço, ombros e braços.',
+                steps: [{
+                    label: 'Alongar com gentileza (60s)',
+                    secs: 60
+                }]
+            },
+            passos: {
+                title: '30 passos — 60s',
+                points: 1,
+                desc: 'Caminhe devagar e conte até 30.',
+                steps: [{
+                    label: 'Passos presentes (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Hidratar & nutrição
+            agua: {
+                title: 'Beber água — instantâneo',
+                points: 1,
+                desc: 'Encha um copo e beba devagar.',
+                steps: [{
+                    label: 'Beber água',
+                    secs: 5
+                }]
+            },
+            lanche: {
+                title: 'Lanche simples — 2min',
+                points: 2,
+                desc: '1 fruta ou pão com algo leve.',
+                steps: [{
+                    label: 'Separar/Preparar (60s)',
+                    secs: 60
+                }, {
+                    label: 'Comer devagar (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Conexão & prazer
+            musica: {
+                title: 'Música favorita — 90s',
+                points: 1,
+                desc: 'Ouça 90s de algo que te faz bem.',
+                steps: [{
+                    label: 'Ouvir presente (90s)',
+                    secs: 90
+                }]
+            },
+            contato: {
+                title: 'Enviar um emoji — instantâneo',
+                points: 1,
+                desc: 'Mande um 👍 ou 🌿 para alguém de confiança.',
+                steps: [{
+                    label: 'Enviar agora',
+                    secs: 5
+                }]
+            },
+            registro: {
+                title: 'Uma coisa que valeu — 1min',
+                points: 1,
+                desc: 'Escreva 1 linha sobre algo que valeu hoje.',
+                steps: [{
+                    label: 'Escrever (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Autocompaixão
+            compaixao: {
+                title: 'Autocompaixão — 1min',
+                points: 1,
+                desc: '“Estou fazendo o melhor que consigo hoje. Eu mereço cuidados gentis”.',
+                steps: [{
+                    label: 'Respire e leia a frase (60s)',
+                    secs: 60
+                }]
             }
-            return `<strong>${type}</strong> - ${resultText}`;
         };
 
-        // Monta e exibe os resultados, incluindo mensagem completa para WhatsApp
-        const displayResults = (depScore, codepScore) => {
-            const depResult = document.getElementById('dependenciaResultado');
-            const codepResult = document.getElementById('codependenciaResultado');
-            depResult.innerHTML = getResultDescription(depScore, 'Dependência Emocional');
-            codepResult.innerHTML = getResultDescription(codepScore, 'Codependência Emocional');
+        let currentMission = null,
+            stepIdx = 0,
+            stepRemain = 0,
+            totalSecs = 0,
+            elapsed = 0,
+            timerInt;
 
-            const patientName = document.getElementById('fullName').value.trim();
-            const testDate = document.getElementById('date').value;
+        function openMission(key) {
+            const m = missions[key];
+            if (!m) return;
+            currentMission = key;
+            stepIdx = 0;
+            stepRemain = m.steps[0].secs;
+            elapsed = 0;
+            totalSecs = m.steps.reduce((a, s) => a + s.secs, 0);
+            $('#missionTitle').textContent = m.title;
+            $('#missionDesc').textContent = m.desc;
+            $('#stepText').textContent = m.steps[0].label;
+            $('#time').textContent = fmt(stepRemain);
+            $('#bar').style.width = '0%';
+            $('#missionModal').showModal();
+        }
 
-            // Obtém o texto simples dos resultados, removendo as tags HTML
-            const depText = stripHTML(getResultDescription(depScore, 'Dependência Emocional'));
-            const codepText = stripHTML(getResultDescription(codepScore, 'Codependência Emocional'));
+        function fmt(s) {
+            const m = Math.floor(s / 60);
+            const r = s % 60;
+            return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`
+        }
 
-            const message = `Olá! Meu nome é ${patientName || "Não informado"}. Realizei a avaliação em ${testDate || "data não informada"}. 
-		Meu resultado de Dependência Emocional é ${depScore} pontos. ${depText}
-		  
-		Meu resultado de Codependência Emocional é ${codepScore} pontos. ${codepText}`;
+        function startMission() {
+            ensureAudio();
+            clearInterval(timerInt);
+            tone(740, .12);
+            timerInt = setInterval(() => {
+                tick();
+                if (stepRemain > 0) {
+                    stepRemain--;
+                    elapsed++;
+                    $('#time').textContent = fmt(stepRemain);
+                    $('#bar').style.width = (elapsed / totalSecs * 100) + '%';
+                }
+                if (stepRemain === 0) {
+                    const m = missions[currentMission];
+                    if (stepIdx < m.steps.length - 1) {
+                        stepIdx++;
+                        stepRemain = m.steps[stepIdx].secs;
+                        $('#stepText').textContent = m.steps[stepIdx].label;
+                        tone(600, .1);
+                    } else {
+                        finishMission();
+                    }
+                }
+            }, 1000);
+        }
 
-            const whatsappUrl = `https://wa.me/5535984647323?text=${encodeURIComponent(message)}`;
-            document.getElementById('whatsappLink').innerHTML = `<a href="${whatsappUrl}" target="_blank"><button type="button">Compartilhar via WhatsApp</button></a>`;
-        };
+        function pauseMission() {
+            clearInterval(timerInt);
+            tone(420, .08)
+        }
 
+        function finishMission() {
+            clearInterval(timerInt);
+            const m = missions[currentMission];
+            if (!state.doneToday[currentMission]) {
+                addStars(m.points);
+                state.doneToday[currentMission] = true;
+                if (Object.keys(state.doneToday).length === 1) state.badges.add('Dia Iniciado ✨');
+            } else {
+                addStars(1);
+            }
+            addFlower();
+            save();
+            $('#missionModal').close();
+        }
 
-        // Função auxiliar para remover tags HTML (se necessário)
-        const stripHTML = html => {
-            const div = document.createElement("div");
-            div.innerHTML = html;
-            return div.textContent || div.innerText || "";
-        };
+        // Botões modal
+        $('#startBtn').addEventListener('click', startMission);
+        $('#pauseBtn').addEventListener('click', pauseMission);
+        $('#finishBtn').addEventListener('click', finishMission);
+        $('#closeBtn').addEventListener('click', () => {
+            pauseMission();
+            $('#missionModal').close();
+        });
 
-        const calculateScore = () => {
-            updateGauge();
-            document.getElementById('result').classList.remove('hidden');
-        };
-        window.calculateScore = calculateScore;
+        // Abrir missões
+        $$('.btn[data-mission]').forEach(btn => btn.addEventListener('click', () => {
+            const key = btn.getAttribute('data-mission');
+            if (key === 'agua' || key === 'contato') {
+                ensureAudio();
+                addStars(missions[key].points);
+                state.doneToday[key] = true;
+                addFlower();
+                setAffirm();
+                save();
+            } else {
+                openMission(key);
+            }
+        }));
+
+        // ========= Mudo & Noturno =========
+        $('#muteBtn').addEventListener('click', () => {
+            state.muted = !state.muted;
+            $('#muteBtn').textContent = state.muted ? '🔇 Sem som' : '🔈 Som';
+            $('#muteBtn').setAttribute('aria-pressed', String(state.muted));
+            if (!state.muted) ensureAudio();
+            save();
+        });
+
+        $('#nightBtn').addEventListener('click', () => {
+            state.night = !state.night;
+            document.body.classList.toggle('dark', state.night);
+            $('#nightBtn').textContent = state.night ? '🌙 Modo Noturno: ON' : '🌙 Modo Noturno: OFF';
+            $('#nightBtn').setAttribute('aria-pressed', String(state.night));
+            save();
+        });
+
+        // ========= Init =========
+        load();
+        updateUI();
+
+        // Tornar áudio disponível após qualquer interação (exigência dos browsers)
+        document.addEventListener('click', () => ensureAudio(), {
+            once: true
+        });
+
+        // Reposicionar flores ao redimensionar mantendo %
+        window.addEventListener('resize', renderGarden);
+
+        // Mensagem inicial suave (uma vez)
+        if (!localStorage.getItem('jardim-autocuidado-welcome')) {
+            alert('Bem-vindo(a) ao Jardim do Autocuidado! Cada missão concluída planta uma flor no jardim. Vamos começar com uma microação? 🌼');
+            localStorage.setItem('jardim-autocuidado-welcome', '1');
+        }
+
+        // CTA inline do CVV acessível por teclado (foco/enter)
+        $('#cvvCtaInline')?.addEventListener('click', () => {
+            window.location.href = 'tel:188';
+        });
     </script>
 </body>
 
