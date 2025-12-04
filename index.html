@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jardim do Autocuidado — jogo de autocuidado gentil</title>
+    <meta name="description" content="Página gamificada, suave e acolhedora, para apoiar em microtarefas de autocuidado com reforço positivo, respiração, grounding, ativação comportamental e mensagens compassivas." />
+    <meta name="theme-color" content="#F0F7F4" />
+    <style>
+        :root {
+            --bg: #F7FAF9;
+            /* fundo calmo */
+            --card: #FFFFFF;
+            /* cartões */
+            --ink: #1B2A2F;
+            /* texto principal */
+            --muted: #5C6B70;
+            /* texto secundário */
+            --accent: #6BC3B1;
+            /* destaque suave (verde água) */
+            --accent-2: #8EC5FF;
+            /* destaque secundário (azul suave) */
+            --warn: #FFB4B4;
+            /* alerta suave */
+            --ok: #A1E3A1;
+            /* sucesso suave */
+            --shadow: 0 4px 18px rgba(0, 0, 0, .08);
+            --radius: 16px;
+
+            /* Botões simétricos */
+            --btn-h: 44px;
+            --btn-min: 140px;
+
+            /* Cores do balão de respiração (calmas e contrastantes) */
+            --breath-center: #FFFFFF;
+            --breath-ring: #CFEAFC;
+            /* azul bem calmo */
+            --breath-outline: #8ABFEF;
+            /* contraste suave */
+        }
+
+        /* Tema Noturno (ativado via classe .dark no body) */
+        body.dark {
+            --bg: #0F1517;
+            --card: #121C20;
+            --ink: #E6F1F0;
+            --muted: #9CB3B2;
+            --accent: #5DB9A6;
+            --accent-2: #78B4FF;
+            --warn: #FF9E9E;
+            --ok: #7BD47B;
+
+            --breath-center: #162229;
+            --breath-ring: #265C80;
+            --breath-outline: #7FBDF0;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        /* Textos justificados de forma global (mantém centralizações pontuais por inline style) */
+        p,
+        li {
+            text-align: justify;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 12px 0 6px 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .brand h1 {
+            font-size: clamp(20px, 2.4vw, 28px);
+            margin: 0
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        /* Toolbar simétrica */
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #EAF6F3;
+            padding: 0 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            height: var(--btn-h);
+            min-width: var(--btn-min)
+        }
+
+        body.dark .pill {
+            background: #1B2A2F
+        }
+
+        /* Botões com dimensões e alinhamento iguais */
+        button,
+        .btn,
+        .btn-ghost,
+        .btn-secondary,
+        .btn-warn,
+        .btn-ok {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--btn-h);
+            min-width: var(--btn-min);
+            padding: 0 16px;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: .25px;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: #073B3A
+        }
+
+        .btn-secondary {
+            background: var(--accent-2);
+            color: #0A2C57
+        }
+
+        .btn-ghost {
+            background: #E9F4F1;
+            color: #074743
+        }
+
+        body.dark .btn-ghost {
+            background: #1B2A2F;
+            color: #CFE7E4
+        }
+
+        .btn-warn {
+            background: var(--warn);
+            color: #5A0101
+        }
+
+        .btn-ok {
+            background: var(--ok);
+            color: #053305
+        }
+
+        .icon {
+            width: 26px;
+            height: 26px;
+            display: inline-block;
+            vertical-align: middle
+        }
+
+        /* Cartões com alturas consistentes; botões no rodapé do cartão */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .card h3 {
+            margin: 6px 0 8px 0;
+            font-size: 18px
+        }
+
+        .card p {
+            margin: 4px 0;
+            color: var(--muted)
+        }
+
+        .grid .card .btn {
+            width: 100%;
+            margin-top: auto
+        }
+
+        .plant-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        @media (max-width:920px) {
+            .plant-area {
+                grid-template-columns: 1fr
+            }
+
+            header {
+                justify-content: center
+            }
+
+            .brand {
+                justify-content: center
+            }
+        }
+
+        .meter {
+            height: 10px;
+            background: #E6F1EF;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .meter>div {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            width: 0%;
+            transition: width .6s ease
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 18px 0 8px 0
+        }
+
+        .subtle {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* Modal */
+        dialog {
+            border: 0;
+            border-radius: 18px;
+            padding: 0;
+            width: min(680px, 96vw);
+            box-shadow: var(--shadow)
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, .2)
+        }
+
+        .modal {
+            background: var(--card);
+            border-radius: 18px;
+            overflow: hidden
+        }
+
+        .modal header {
+            padding: 16px;
+            border-bottom: 1px solid #EEF3F2
+        }
+
+        body.dark .modal header {
+            border-bottom-color: #1E2A2E
+        }
+
+        .modal section {
+            padding: 18px
+        }
+
+        .timer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px
+        }
+
+        .timer .time {
+            font-weight: 800;
+            font-size: 44px;
+            letter-spacing: 1px
+        }
+
+        .progress {
+            height: 12px;
+            width: 100%;
+            background: #E9F4F1;
+            border-radius: 999px;
+            overflow: hidden
+        }
+
+        .progress>div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent));
+            transition: width .3s linear
+        }
+
+        /* Botões do modal alinhados e simétricos */
+        .timer .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%
+        }
+
+        .timer .actions button {
+            flex: 1 1 140px
+        }
+
+        /* Balão de Respiração (contraste calmo + expansão maior/menor) */
+        .breath {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, var(--breath-center) 0, var(--breath-center) 38%, var(--breath-ring) 100%);
+            box-shadow: 0 0 0 3px var(--breath-outline) inset, var(--shadow);
+            display: grid;
+            place-items: center;
+            margin: 10px auto;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.92);
+                filter: saturate(0.95);
+            }
+
+            50% {
+                transform: scale(1.12);
+                filter: saturate(1.05);
+            }
+
+            100% {
+                transform: scale(0.92);
+                filter: saturate(0.95);
+            }
+        }
+
+        .affirm {
+            background: linear-gradient(180deg, #FEFFFF, #F3FBF9);
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px dashed #D8EEE9
+        }
+
+        body.dark .affirm {
+            background: linear-gradient(180deg, #132028, #1A2E37);
+            border-color: #23414A
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: #F0F7FF;
+            color: #0F345C;
+            font-weight: 700
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+
+        /* GARDEN */
+        .garden {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #F4FBF9 0%, #FFFFFF 50%, #EAF6F3 100%);
+        }
+
+        body.dark .garden {
+            background: linear-gradient(180deg, #0F1B1E 0%, #0F1A1D 50%, #0F2226 100%);
+        }
+
+        .garden::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 46px;
+            background: linear-gradient(180deg, #D6EFE7, #C7E9DF);
+        }
+
+        body.dark .garden::after {
+            background: linear-gradient(180deg, #13282E, #103038);
+        }
+
+        .flower {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            transform: translate(-50%, -50%) scale(.6);
+            animation: pop .35s ease-out;
+        }
+
+        @keyframes pop {
+            from {
+                transform: translate(-50%, -50%) scale(.2);
+                opacity: 0
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(.6);
+                opacity: 1
+            }
+        }
+
+        .sky-bubbles {
+            position: absolute;
+            inset: 0;
+            opacity: .25;
+            pointer-events: none
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -30px;
+            width: 10px;
+            height: 10px;
+            background: #8EC5FF;
+            border-radius: 50%;
+            animation: rise 12s linear infinite
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-120vh)
+            }
+        }
+
+        .footer {
+            margin: 24px 0;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center
+        }
+
+        .signature {
+            margin-top: 6px;
+            font-weight: 700;
+            color: var(--ink)
+        }
+
+        .kbd {
+            border: 1px solid #d8e7e3;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: #f6fbfa
+        }
+
+        body.dark .kbd {
+            border-color: #244148;
+            background: #14262B;
+            color: #CDE3E0
+        }
+
+        /* Justificar conteúdo do bloco “Sobre o medo de mudar” (já estava, mantido) */
+        .justify {
+            text-align: justify;
+        }
+
+        .justify li {
+            text-align: justify;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header aria-label="Barra superior">
+            <div class="brand" role="banner" aria-label="Jardim do Autocuidado">
+                <span aria-hidden="true" class="icon">🌿</span>
+                <div>
+                    <h1>Jardim do Autocuidado</h1>
+                    <small>Um jogo de autocuidado gentil 🌱</small>
+                </div>
+            </div>
+            <div class="toolbar" role="toolbar" aria-label="Controles">
+                <span class="pill" title="Seu progresso hoje"><span aria-hidden>⭐</span> <span id="stars">0</span> pontos</span>
+                <span class="pill" title="Flores plantadas">🌼 <span id="flowerCount">0</span></span>
+                <button id="muteBtn" class="btn-ghost" aria-pressed="false" aria-label="Alternar sons">🔈 Som</button>
+                <button id="nightBtn" class="btn-secondary" aria-pressed="false" aria-label="Ativar/Desativar Modo Noturno">🌙 Modo Noturno: OFF</button>
+                <a class="btn-warn" id="cvvBtn" href="tel:188" aria-label="Precisa de ajuda agora? Ligar 188 do CVV">
+                    ❤️‍🩹 Precisa de ajuda agora? LIGAR 188 (CVV)
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <section class="card plant-area" aria-labelledby="plant-title">
+                <div>
+                    <div class="section-title">
+                        <h2 id="plant-title" style="margin:0">Seu jardim hoje</h2>
+                        <span class="subtle">Cada microação planta uma flor. Visualize seu progresso 🌼</span>
+                    </div>
+                    <div class="garden" id="garden" aria-live="polite" aria-label="Jardim. Cada flor representa uma missão concluída.">
+                        <div class="sky-bubbles" id="bubbles" aria-hidden="true"></div>
+                    </div>
+                    <div class="meter" aria-label="Meta do dia">
+                        <div id="meterFill" style="width:0%"></div>
+                    </div>
+                    <p class="subtle" style="margin-top:6px">Meta suave: 5 pontos hoje. Cada missão concluída planta uma flor. 💚</p>
+                </div>
+
+                <div>
+                    <div class="section-title">
+                        <h2 style="margin:0">Respirar e acalmar</h2>
+                        <span class="subtle">Use quando bater ansiedade</span>
+                    </div>
+                    <div class="card" aria-label="Exercício de respiração box">
+                        <div class="breath" id="breathCircle" aria-hidden="true"></div>
+                        <div style="text-align:center">
+                            <p id="breathCue" style="margin:6px 0; font-weight:700; text-align:center">Inspire (4)</p>
+                            <button class="btn-ghost" id="breathStart">▶️ Iniciar respiração 4–4–4–4</button>
+                        </div>
+                    </div>
+
+                    <div class="card" aria-label="Grounding 5-4-3-2-1">
+                        <h3>Grounding 5–4–3–2–1</h3>
+                        <p class="subtle">Olhe ao redor e diga:</p>
+                        <ul>
+                            <li>5 coisas que você vê</li>
+                            <li>4 coisas que você sente com o corpo</li>
+                            <li>3 sons que você escuta</li>
+                            <li>2 cheiros que percebe</li>
+                            <li>1 gosto que sente</li>
+                        </ul>
+                        <button class="btn-ghost" id="groundBtn">✨ Registrar como feito (1 ponto)</button>
+                    </div>
+
+                    <div class="affirm" aria-label="Palavras suaves">
+                        <p id="affirmText" style="margin:0; font-weight:600; text-align:justify">Pequenos passos contam. Você não precisa sentir vontade para começar; a vontade aparece depois do primeiro passo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Missões de autocuidado (ativação comportamental)</h2>
+                    <span class="subtle">Escolha 1 missão. Depois, se quiser, mais uma. Sem pressa.</span>
+                </div>
+
+                <div class="grid" role="list" aria-label="Lista de missões">
+                    <!-- Higiene & cuidados essenciais -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🪥 Escovar dentes</div>
+                        <h3>Brilho rápido — 60s</h3>
+                        <p>30s acima + 30s abaixo. Gentileza &gt; perfeição.</p>
+                        <button class="btn" data-mission="dentes">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💇‍♀‍ Pentear</div>
+                        <h3>3 passes gentis — 60s</h3>
+                        <p>Penteie devagar, três passes por região. Cuide de você como de uma amiga.</p>
+                        <button class="btn" data-mission="cabelo">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🚿 Banho</div>
+                        <h3>Banho essencial — 2 min</h3>
+                        <p>Áreas essenciais, água morna e respiração calma.</p>
+                        <button class="btn" data-mission="banho">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🖐️ Mãos</div>
+                        <h3>Lavar as mãos — 30s</h3>
+                        <p>Água, sabão e carinho — palma, dorso, entre os dedos.</p>
+                        <button class="btn" data-mission="maos">Começar missão</button>
+                    </article>
+
+                    <!-- Ambiente -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🧺 Quarto</div>
+                        <h3>Arrumação turbo — 3 min</h3>
+                        <p>Roupas no cesto e travesseiro alinhado. O básico já muda o clima.</p>
+                        <button class="btn" data-mission="quarto">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🪟 Janela</div>
+                        <h3>Abrir + 5 respirações — 1 min</h3>
+                        <p>Abra a janela, sinta o ar e faça 5 respirações lentas.</p>
+                        <button class="btn" data-mission="janela">Começar missão</button>
+                    </article>
+
+                    <!-- Corpo & energia -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">☀️ Sol</div>
+                        <h3>Sol na janela — 2 min</h3>
+                        <p>Luz suave no rosto ou nos braços. Segurança em primeiro lugar.</p>
+                        <button class="btn" data-mission="sol">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🧘 Alongar</div>
+                        <h3>Alongamento suave — 1 min</h3>
+                        <p>Pescoço, ombros e braços. Movimento sem dor.</p>
+                        <button class="btn" data-mission="alongar">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🚶 Passos</div>
+                        <h3>30 passos no quarto — 60s</h3>
+                        <p>Caminhe devagar, conte até 30. Respire junto dos passos.</p>
+                        <button class="btn" data-mission="passos">Começar missão</button>
+                    </article>
+
+                    <!-- Hidratar & nutrição simples -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💧 Hidratar</div>
+                        <h3>Copo d’água — agora</h3>
+                        <p>Encha um copo e beba devagar, observando a sensação.</p>
+                        <button class="btn" data-mission="agua">Concluir (instantâneo)</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🥪 Lanche</div>
+                        <h3>Lanche simples — 2 min</h3>
+                        <p>1 fruta ou pão com algo leve. Só o suficiente.</p>
+                        <button class="btn" data-mission="lanche">Começar missão</button>
+                    </article>
+
+                    <!-- Conexão & prazer -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🎵 Música</div>
+                        <h3>Música favorita — 90s</h3>
+                        <p>Ouça 90s de uma faixa que te faz bem.</p>
+                        <button class="btn" data-mission="musica">Começar missão</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">💬 Contato</div>
+                        <h3>Enviar um emoji — agora</h3>
+                        <p>Mande um 👍 ou 🌿 para alguém de confiança.</p>
+                        <button class="btn" data-mission="contato">Concluir (instantâneo)</button>
+                    </article>
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">📝 Registro</div>
+                        <h3>Uma coisa que valeu — 1 min</h3>
+                        <p>Escreva uma linha sobre algo pequeno que valeu hoje.</p>
+                        <button class="btn" data-mission="registro">Começar missão</button>
+                    </article>
+
+                    <!-- Autocompaixão -->
+                    <article class="card" role="listitem">
+                        <div class="badge" aria-hidden="true">🤍 Autocompaixão</div>
+                        <h3>Mensagem que abraça — 1 min</h3>
+                        <p>Leia: “Estou fazendo o melhor que consigo hoje. Eu mereço cuidados gentis”.</p>
+                        <button class="btn" data-mission="compaixao">Começar missão</button>
+                    </article>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Sobre o medo de mudar</h2>
+                </div>
+                <div class="card justify">
+                    <p><strong>Ideia-chave:</strong> melhorar não significa ser abandonada. Seu valor não depende do que você faz hoje. As pessoas que importam querem você <em>viva e menos sobrecarregada</em>, um passo de cada vez.</p>
+                    <ul>
+                        <li><strong>Experimento gentil:</strong> faça 1 microação e observe: alguém deixa de gostar de você por isso? Registre a evidência.</li>
+                        <li><strong>Contrato consigo:</strong> “Se eu der pequenos passos por 7 dias, vou me dar um presente simples (música, banho cheiroso, 10 min de sol).”</li>
+                        <li><strong>Frase-âncora:</strong> “Eu posso melhorar sem me perder. Eu sigo comigo.”</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section style="margin-top:16px">
+                <div class="section-title">
+                    <h2 style="margin:0">Conquistas</h2>
+                    <span class="subtle">Selos por presença, não por perfeição</span>
+                </div>
+                <div class="card badges" id="badges" aria-live="polite"></div>
+            </section>
+
+            <p class="footer">
+                Este jogo é um apoio terapêutico e <strong>não substitui</strong> acompanhamento profissional. Em crise, toque em <strong id="cvvCtaInline">“LIGAR 188 (CVV)”</strong> acima para falar com alguém agora. Seus dados ficam apenas no seu dispositivo (localStorage).
+                <br />
+                <span class="signature">
+                    Thaís Campos, Psicóloga Clínica. WhatsApp:
+                    <a href="https://wa.me/5535984647323">(35) 98464-7323</a>.
+                </span>
+            </p>
+        </main>
+    </div>
+
+    <!-- Modal de missão -->
+    <dialog id="missionModal" aria-labelledby="missionTitle">
+        <div class="modal">
+            <header>
+                <h3 id="missionTitle" style="margin:0">Missão</h3>
+            </header>
+            <section>
+                <div id="missionDesc" class="subtle" style="margin-bottom:10px"></div>
+                <div class="timer" aria-live="polite">
+                    <div class="time" id="time">00:00</div>
+                    <div class="progress">
+                        <div id="bar"></div>
+                    </div>
+                    <div id="stepText" style="font-weight:700; text-align:center"></div>
+                    <div class="actions">
+                        <button id="startBtn" class="btn-ok">▶️ Iniciar</button>
+                        <button id="pauseBtn" class="btn-ghost">⏸️ Pausar</button>
+                        <button id="finishBtn" class="btn">✅ Concluir</button>
+                        <button id="closeBtn" class="btn-warn">✖️ Fechar</button>
+                    </div>
+                </div>
+                <details style="margin-top:10px">
+                    <summary><strong>Dicas compassivas</strong></summary>
+                    <ul>
+                        <li>Não precisa de perfeição; só presença.</li>
+                        <li>Se cansar, pause. Voltar já é vitória.</li>
+                        <li>Fale consigo como falaria com uma amiga querida.</li>
+                    </ul>
+                </details>
+            </section>
+        </div>
+    </dialog>
+
+    <script>
+        // ========= Estado =========
+        const state = {
+            stars: 0,
+            muted: false,
+            night: false, // substitui "safe"
+            badges: new Set(),
+            doneToday: {},
+            flowers: [], // {xPerc,yPerc,color}
+        };
+
+        // ========= Utilidades =========
+        const $ = sel => document.querySelector(sel);
+        const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+        // Persistência simples
+        const save = () => {
+            try {
+                localStorage.setItem('jardim-autocuidado', JSON.stringify({
+                    stars: state.stars,
+                    badges: [...state.badges],
+                    doneToday: state.doneToday,
+                    flowers: state.flowers,
+                    night: state.night,
+                }));
+            } catch (e) {}
+        };
+        const load = () => {
+            try {
+                const d = JSON.parse(localStorage.getItem('jardim-autocuidado')) || {};
+                state.stars = d.stars || 0;
+                state.badges = new Set(d.badges || []);
+                state.doneToday = d.doneToday || {};
+                state.flowers = d.flowers || [];
+                state.night = !!d.night;
+                if (state.night) document.body.classList.add('dark');
+            } catch (e) {}
+        };
+
+        // ========= Áudio =========
+        let audioCtx, masterGain;
+
+        function ensureAudio() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                    masterGain = audioCtx.createGain();
+                    masterGain.gain.value = 0.6; // volume global
+                    masterGain.connect(audioCtx.destination);
+                } else if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            } catch (e) {}
+        }
+
+        function tone(freq = 660, dur = 0.09, type = 'square', vol = 0.15) {
+            if (state.muted) return;
+            ensureAudio();
+            if (!audioCtx) return;
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = type;
+            o.frequency.value = freq;
+            g.gain.value = 0.0001;
+            o.connect(g).connect(masterGain);
+            o.start();
+            const now = audioCtx.currentTime;
+            g.gain.exponentialRampToValueAtTime(vol, now + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.00001, now + dur);
+            o.stop(now + dur + 0.02);
+        }
+
+        function tick() {
+            tone(900, 0.06, 'square', 0.18);
+        }
+
+        // Avisos suaves
+        const affirmations = [
+            'Pequenos passos contam. Você é importante.',
+            'Gentileza consigo mesma é força, não fraqueza.',
+            'Você pode pausar e recomeçar. Isso também é cuidado.',
+            'Hoje, 1%. Amanhã, quem sabe 1% de novo.',
+            'Você não está sozinha. Este passo já é coragem.',
+            'Melhorar não significa perder; significa se acolher.',
+        ];
+
+        function setAffirm() {
+            $('#affirmText').textContent = affirmations[Math.floor(Math.random() * affirmations.length)];
+        }
+
+        // ========= Jardim =========
+        const COLORS = ['#FFDF7D', '#FFD1E1', '#D9C4FF', '#BFF2D6', '#FFE9A8', '#FFC6A8'];
+
+        function renderGarden() {
+            const g = $('#garden');
+            g.querySelectorAll('.flower').forEach(el => el.remove());
+            state.flowers.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'flower';
+                el.style.left = f.xPerc + '%';
+                el.style.top = f.yPerc + '%';
+                el.innerHTML = `<svg viewBox="0 0 24 24" width="28" height="28" aria-label="Flor"><g>
+          <circle cx="12" cy="12" r="10" fill="${f.color}" stroke="#F6C453" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="#F6A800"/>
+        </g></svg>`;
+                g.appendChild(el);
+            });
+            $('#flowerCount').textContent = state.flowers.length;
+        }
+
+        function addFlower() {
+            const g = $('#garden');
+            const rect = g.getBoundingClientRect();
+            const margin = 8;
+            const x = margin + Math.random() * (rect.width - margin * 2);
+            const y = margin + Math.random() * (rect.height - margin * 2);
+            const f = {
+                xPerc: (x / rect.width * 100),
+                yPerc: (y / rect.height * 100),
+                color: COLORS[Math.floor(Math.random() * COLORS.length)]
+            };
+            state.flowers.push(f);
+            save();
+            renderGarden();
+        }
+
+        function renderBubbles() {
+            const c = $('#bubbles');
+            c.innerHTML = '';
+            for (let i = 0; i < 8; i++) {
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                b.style.left = Math.random() * 100 + '%';
+                b.style.animationDelay = (Math.random() * 10) + 's';
+                b.style.opacity = 0.2 + Math.random() * 0.4;
+                c.appendChild(b);
+            }
+        }
+
+        function updateUI() {
+            $('#stars').textContent = state.stars;
+            const pct = Math.min(100, (state.stars / 5) * 100);
+            $('#meterFill').style.width = pct + '%';
+            setAffirm();
+            renderBadges();
+            renderGarden();
+            renderBubbles();
+            // Atualiza botões
+            $('#nightBtn').textContent = state.night ? '🌙 Modo Noturno: ON' : '🌙 Modo Noturno: OFF';
+            $('#nightBtn').setAttribute('aria-pressed', String(state.night));
+            $('#muteBtn').textContent = state.muted ? '🔇 Sem som' : '🔈 Som';
+            $('#muteBtn').setAttribute('aria-pressed', String(state.muted));
+            save();
+        }
+
+        function addStars(n) {
+            state.stars = Math.max(0, state.stars + n);
+            if (state.stars >= 1) state.badges.add('Primeiro passo');
+            if (state.stars >= 3) state.badges.add('Regador Gentil');
+            if (state.stars >= 5) state.badges.add('Meta do Dia 💚');
+            updateUI();
+        }
+
+        function renderBadges() {
+            const box = $('#badges');
+            box.innerHTML = [...state.badges].map(b => `<span class="badge">🏅 ${b}</span>`).join('');
+        }
+
+        // ========= Respiração =========
+        let breathTimer, breathPhase = 0,
+            breathCount = 0; // 0 in, 1 hold, 2 out, 3 hold
+        function nextBreathPhase() {
+            const cues = ['Inspire (4)', 'Segure (4)', 'Expire (4)', 'Segure (4)'];
+            $('#breathCue').textContent = cues[breathPhase];
+            breathPhase = (breathPhase + 1) % 4;
+            breathCount++;
+            if (breathCount % 4 === 0) {
+                setAffirm();
+                tone(520, .12, 'sine', 0.1)
+            }
+        }
+        $('#breathStart').addEventListener('click', () => {
+            ensureAudio();
+            clearInterval(breathTimer);
+            breathPhase = 0;
+            breathCount = 0;
+            nextBreathPhase();
+            breathTimer = setInterval(nextBreathPhase, 4000);
+        });
+
+        // ========= Grounding =========
+        $('#groundBtn').addEventListener('click', () => {
+            ensureAudio();
+            addStars(1);
+            tone(660, .1)
+        });
+
+        // ========= Missões =========
+        const missions = {
+            // Higiene
+            dentes: {
+                title: 'Escovar dentes — 60s',
+                points: 2,
+                desc: '30s arcada de cima, 30s arcada de baixo. Gentileza > perfeição.',
+                steps: [{
+                    label: 'Parte de cima (30s)',
+                    secs: 30
+                }, {
+                    label: 'Parte de baixo (30s)',
+                    secs: 30
+                }]
+            },
+            cabelo: {
+                title: 'Pentear — 60s',
+                points: 1,
+                desc: 'Três passes por região, movimento lento e gentil.',
+                steps: [{
+                    label: 'Topo e laterais (30s)',
+                    secs: 30
+                }, {
+                    label: 'Nuca e comprimento (30s)',
+                    secs: 30
+                }]
+            },
+            banho: {
+                title: 'Banho essencial — 2min',
+                points: 2,
+                desc: 'Áreas essenciais, água morna e respiração calma.',
+                steps: [{
+                    label: 'Pescoço e axilas (40s)',
+                    secs: 40
+                }, {
+                    label: 'Partes íntimas (40s)',
+                    secs: 40
+                }, {
+                    label: 'Pés e enxágue (40s)',
+                    secs: 40
+                }]
+            },
+            maos: {
+                title: 'Lavar as mãos — 30s',
+                points: 1,
+                desc: 'Palmas, dorso e entre os dedos.',
+                steps: [{
+                    label: 'Lavar gentilmente (30s)',
+                    secs: 30
+                }]
+            },
+
+            // Ambiente
+            quarto: {
+                title: 'Arrumação turbo — 3min',
+                points: 2,
+                desc: 'Roupas no cesto e travesseiro alinhado. O básico já ajuda.',
+                steps: [{
+                    label: 'Juntar roupas (60s)',
+                    secs: 60
+                }, {
+                    label: 'Cama e travesseiro (60s)',
+                    secs: 60
+                }, {
+                    label: 'Lixo leve / mesa (60s)',
+                    secs: 60
+                }]
+            },
+            janela: {
+                title: 'Abrir janela + 5 respirações — 1min',
+                points: 1,
+                desc: 'Abra a janela e faça 5 respirações lentas.',
+                steps: [{
+                    label: 'Respirar com a janela aberta (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Corpo & energia
+            sol: {
+                title: 'Sol na janela — 2min',
+                points: 2,
+                desc: 'Luz suave no rosto/braços (se seguro).',
+                steps: [{
+                    label: 'Aproveitar a luz (60s)',
+                    secs: 60
+                }, {
+                    label: 'Perceber o corpo (60s)',
+                    secs: 60
+                }]
+            },
+            alongar: {
+                title: 'Alongamento suave — 1min',
+                points: 1,
+                desc: 'Pescoço, ombros e braços.',
+                steps: [{
+                    label: 'Alongar com gentileza (60s)',
+                    secs: 60
+                }]
+            },
+            passos: {
+                title: '30 passos — 60s',
+                points: 1,
+                desc: 'Caminhe devagar e conte até 30.',
+                steps: [{
+                    label: 'Passos presentes (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Hidratar & nutrição
+            agua: {
+                title: 'Beber água — instantâneo',
+                points: 1,
+                desc: 'Encha um copo e beba devagar.',
+                steps: [{
+                    label: 'Beber água',
+                    secs: 5
+                }]
+            },
+            lanche: {
+                title: 'Lanche simples — 2min',
+                points: 2,
+                desc: '1 fruta ou pão com algo leve.',
+                steps: [{
+                    label: 'Separar/Preparar (60s)',
+                    secs: 60
+                }, {
+                    label: 'Comer devagar (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Conexão & prazer
+            musica: {
+                title: 'Música favorita — 90s',
+                points: 1,
+                desc: 'Ouça 90s de algo que te faz bem.',
+                steps: [{
+                    label: 'Ouvir presente (90s)',
+                    secs: 90
+                }]
+            },
+            contato: {
+                title: 'Enviar um emoji — instantâneo',
+                points: 1,
+                desc: 'Mande um 👍 ou 🌿 para alguém de confiança.',
+                steps: [{
+                    label: 'Enviar agora',
+                    secs: 5
+                }]
+            },
+            registro: {
+                title: 'Uma coisa que valeu — 1min',
+                points: 1,
+                desc: 'Escreva 1 linha sobre algo que valeu hoje.',
+                steps: [{
+                    label: 'Escrever (60s)',
+                    secs: 60
+                }]
+            },
+
+            // Autocompaixão
+            compaixao: {
+                title: 'Autocompaixão — 1min',
+                points: 1,
+                desc: '“Estou fazendo o melhor que consigo hoje. Eu mereço cuidados gentis”.',
+                steps: [{
+                    label: 'Respire e leia a frase (60s)',
+                    secs: 60
+                }]
+            }
+        };
+
+        let currentMission = null,
+            stepIdx = 0,
+            stepRemain = 0,
+            totalSecs = 0,
+            elapsed = 0,
+            timerInt;
+
+        function openMission(key) {
+            const m = missions[key];
+            if (!m) return;
+            currentMission = key;
+            stepIdx = 0;
+            stepRemain = m.steps[0].secs;
+            elapsed = 0;
+            totalSecs = m.steps.reduce((a, s) => a + s.secs, 0);
+            $('#missionTitle').textContent = m.title;
+            $('#missionDesc').textContent = m.desc;
+            $('#stepText').textContent = m.steps[0].label;
+            $('#time').textContent = fmt(stepRemain);
+            $('#bar').style.width = '0%';
+            $('#missionModal').showModal();
+        }
+
+        function fmt(s) {
+            const m = Math.floor(s / 60);
+            const r = s % 60;
+            return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`
+        }
+
+        function startMission() {
+            ensureAudio();
+            clearInterval(timerInt);
+            tone(740, .12);
+            timerInt = setInterval(() => {
+                tick();
+                if (stepRemain > 0) {
+                    stepRemain--;
+                    elapsed++;
+                    $('#time').textContent = fmt(stepRemain);
+                    $('#bar').style.width = (elapsed / totalSecs * 100) + '%';
+                }
+                if (stepRemain === 0) {
+                    const m = missions[currentMission];
+                    if (stepIdx < m.steps.length - 1) {
+                        stepIdx++;
+                        stepRemain = m.steps[stepIdx].secs;
+                        $('#stepText').textContent = m.steps[stepIdx].label;
+                        tone(600, .1);
+                    } else {
+                        finishMission();
+                    }
+                }
+            }, 1000);
+        }
+
+        function pauseMission() {
+            clearInterval(timerInt);
+            tone(420, .08)
+        }
+
+        function finishMission() {
+            clearInterval(timerInt);
+            const m = missions[currentMission];
+            if (!state.doneToday[currentMission]) {
+                addStars(m.points);
+                state.doneToday[currentMission] = true;
+                if (Object.keys(state.doneToday).length === 1) state.badges.add('Dia Iniciado ✨');
+            } else {
+                addStars(1);
+            }
+            addFlower();
+            save();
+            $('#missionModal').close();
+        }
+
+        // Botões modal
+        $('#startBtn').addEventListener('click', startMission);
+        $('#pauseBtn').addEventListener('click', pauseMission);
+        $('#finishBtn').addEventListener('click', finishMission);
+        $('#closeBtn').addEventListener('click', () => {
+            pauseMission();
+            $('#missionModal').close();
+        });
+
+        // Abrir missões
+        $$('.btn[data-mission]').forEach(btn => btn.addEventListener('click', () => {
+            const key = btn.getAttribute('data-mission');
+            if (key === 'agua' || key === 'contato') {
+                ensureAudio();
+                addStars(missions[key].points);
+                state.doneToday[key] = true;
+                addFlower();
+                setAffirm();
+                save();
+            } else {
+                openMission(key);
+            }
+        }));
+
+        // ========= Mudo & Noturno =========
+        $('#muteBtn').addEventListener('click', () => {
+            state.muted = !state.muted;
+            $('#muteBtn').textContent = state.muted ? '🔇 Sem som' : '🔈 Som';
+            $('#muteBtn').setAttribute('aria-pressed', String(state.muted));
+            if (!state.muted) ensureAudio();
+            save();
+        });
+
+        $('#nightBtn').addEventListener('click', () => {
+            state.night = !state.night;
+            document.body.classList.toggle('dark', state.night);
+            $('#nightBtn').textContent = state.night ? '🌙 Modo Noturno: ON' : '🌙 Modo Noturno: OFF';
+            $('#nightBtn').setAttribute('aria-pressed', String(state.night));
+            save();
+        });
+
+        // ========= Init =========
+        load();
+        updateUI();
+
+        // Tornar áudio disponível após qualquer interação (exigência dos browsers)
+        document.addEventListener('click', () => ensureAudio(), {
+            once: true
+        });
+
+        // Reposicionar flores ao redimensionar mantendo %
+        window.addEventListener('resize', renderGarden);
+
+        // Mensagem inicial suave (uma vez)
+        if (!localStorage.getItem('jardim-autocuidado-welcome')) {
+            alert('Bem-vinda ao Jardim do Autocuidado! Cada missão concluída planta uma flor no jardim. Vamos começar com uma microação? 🌼');
+            localStorage.setItem('jardim-autocuidado-welcome', '1');
+        }
+
+        // CTA inline do CVV acessível por teclado (foco/enter)
+        $('#cvvCtaInline')?.addEventListener('click', () => {
+            window.location.href = 'tel:188';
+        });
+    </script>
+</body>
+
+</html>
